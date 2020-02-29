@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using Sel_b10_hw;
 
 namespace Sel_b10_hw
 {
@@ -24,18 +23,18 @@ namespace Sel_b10_hw
         {
             helper.Navigation.Go2Url("admin/");
             Login(admin);
-            
+
             var leftsideBar = helper.Browser.FindElements(By.CssSelector("ul#box-apps-menu li"));
 
             List<string> menu = new List<string>();
             foreach (var item in leftsideBar)
             {
                 menu.Add(item.Text);
-            }            
+            }
 
-            for(int menuItem=0; menuItem< menu.Count; menuItem++)
-            {                
-                foreach(var item in leftsideBar)
+            for (int menuItem = 0; menuItem < menu.Count; menuItem++)
+            {
+                foreach (var item in leftsideBar)
                 {
                     if (item.Text == menu[menuItem])
                     {
@@ -43,21 +42,21 @@ namespace Sel_b10_hw
                         break;
                     }
                 }
-                
+
                 Assert.IsNotNull(helper.Browser.FindElements(By.CssSelector("h1")));
 
                 leftsideBar = helper.Browser.FindElements(By.CssSelector("ul#box-apps-menu li"));
                 var newMenu = new List<string>();
-                int nextItem=0;
+                int nextItem = 0;
                 foreach (var item in leftsideBar)
                 {
                     newMenu.Add(item.Text);
-                    if(item.Text== menu[menuItem])
+                    if (item.Text == menu[menuItem])
                     {
-                        nextItem= newMenu.Count;
+                        nextItem = newMenu.Count;
                     }
                 }
-                
+
                 try
                 {
                     if (newMenu[nextItem] != menu[menuItem + 1])
@@ -72,8 +71,8 @@ namespace Sel_b10_hw
 
                         int newItemIdStart = newMenu.IndexOf(menu[menuItem]);
                         int newItemIdEnd = newMenu.IndexOf(menu[menuItem + 1]);
-                        menu.InsertRange(menuItem + 1, newMenu.GetRange(newItemIdStart+1, newItemIdEnd - newItemIdStart-1));
-                        menuItem++;                        
+                        menu.InsertRange(menuItem + 1, newMenu.GetRange(newItemIdStart + 1, newItemIdEnd - newItemIdStart - 1));
+                        menuItem++;
                     }
                 }
                 catch (Exception e)
@@ -81,7 +80,7 @@ namespace Sel_b10_hw
 
                 }
             }
-            TestContext.WriteLine("All menu item count: "+menu.Count);
+            TestContext.WriteLine("All menu item count: " + menu.Count);
             foreach (var s in menu)
             {
                 TestContext.WriteLine(s);
@@ -89,7 +88,7 @@ namespace Sel_b10_hw
         }
 
         [Test]
-        [Description("Exercise nine")]
+        [Description("Exercise nine part 1")]
         public void Countries()
         {
             helper.Navigation.Go2Url("admin/?app=countries&doc=countries");
@@ -97,19 +96,19 @@ namespace Sel_b10_hw
 
             var countriesTable = helper.Browser.FindElements(By.ClassName("row"));
             var contries = new List<Countries>();
-            
-            foreach(var row in countriesTable)
-            {                
+
+            foreach (var row in countriesTable)
+            {
                 var countriesColumn = row.FindElements(By.TagName("td"));
 
                 var currentLink = countriesColumn[4].FindElement(By.TagName("a"));
 
-                contries.Add(new Countries() { 
+                contries.Add(new Countries() {
                     Id = int.Parse(countriesColumn[2].Text),
                     Code = countriesColumn[3].Text,
                     Name = countriesColumn[4].Text,
                     Link = currentLink.GetAttribute("href"),
-                    Zones = int.Parse(countriesColumn[5].Text)});                
+                    Zones = int.Parse(countriesColumn[5].Text) });
             }
 
             var etalon = new List<string>();
@@ -118,7 +117,7 @@ namespace Sel_b10_hw
             foreach (var contry in contries)
             {
                 etalon.Add(contry.Name);
-                if(contry.Zones>0)
+                if (contry.Zones > 0)
                 {
                     bigContries.Add(contry);
                 }
@@ -126,33 +125,78 @@ namespace Sel_b10_hw
 
             Assert.Multiple(() =>
             {
-                Assert.That(etalon, Is.Ordered.Ascending); 
-                
-                foreach(var contry in bigContries)
+                Assert.That(etalon, Is.Ordered.Ascending);
+
+                foreach (var contry in bigContries)
                 {
                     helper.Navigation.Go2Url(contry.Link, true);
+
                     var zonesTable = helper.Browser.FindElements(By.CssSelector("table#table-zones tr"));
                     var contriesZones = new List<CountryZones>();
 
-                    for(int i=1; i<(zonesTable.Count-1);i++)
+                    for (int i = 1; i < (zonesTable.Count - 1); i++)
                     {
                         var zonesColumn = zonesTable[i].FindElements(By.TagName("td"));
 
-                        contriesZones.Add(new CountryZones() { 
-                        Id=int.Parse(zonesColumn[0].Text),
-                        Code = zonesColumn[1].Text,
-                        Name = zonesColumn[2].Text});
+                        contriesZones.Add(new CountryZones() {
+                            Id = int.Parse(zonesColumn[0].Text),
+                            Code = zonesColumn[1].Text,
+                            Name = zonesColumn[2].Text });
                     }
 
                     etalon.Clear();
-                    foreach(var zone in contriesZones)
+                    foreach (var zone in contriesZones)
                     {
                         etalon.Add(zone.Name);
                     }
 
                     Assert.That(etalon, Is.Ordered.Ascending);
                 }
-            });            
+            });
+        }
+
+        [Test]
+        [Description("Exercise nine part 2")]
+        public void GeoZone()
+        {
+            helper.Navigation.Go2Url("admin/?app=geo_zones&doc=geo_zones");
+            Login(admin);
+
+            var geoZoneTable = helper.Browser.FindElements(By.ClassName("row"));
+            var zoneLinks = new List<string>();
+
+            foreach(var row in geoZoneTable)
+            {
+                var column = row.FindElements(By.TagName("td"));
+                zoneLinks.Add(column[2].FindElement(By.TagName("a")).GetAttribute("href"));
+            }
+
+            foreach(var zoneLink in zoneLinks)
+            {
+                helper.Navigation.Go2Url(zoneLink, true);
+
+                var zonesTable = helper.Browser.FindElements(By.CssSelector("table#table-zones tr"));
+
+                var zones = new List<string>();
+
+                for (int i = 1; i < (zonesTable.Count - 1); i++)
+                {
+                    var zonesColumns = zonesTable[i].FindElements(By.TagName("td"));
+                    
+                    var zoneItem = zonesColumns[2].FindElements(By.TagName("option"));
+                    
+                    foreach (var zone in zoneItem)
+                    {
+                        if (zone.Selected)
+                        {
+                            zones.Add(zone.GetAttribute("textContent"));
+                        }                        
+                    }                   
+                }
+                
+                Assert.That(zones, Is.Ordered.Ascending);
+
+            }
         }
     }
 }
