@@ -11,9 +11,16 @@ namespace Sel_b10_hw
             _driver = driver;
         }
 
-        public void Go2Url(string uri)
-        {
-            _driver.Url = "http://localhost/litecart/" + uri;
+        public void Go2Url(string uri, bool isFullPath=false)
+        {            
+            if (isFullPath)
+            {
+                _driver.Url = uri;
+            }
+            else
+            {
+                _driver.Url = "http://localhost/litecart/" + uri;
+            }
         }
     }
 }
