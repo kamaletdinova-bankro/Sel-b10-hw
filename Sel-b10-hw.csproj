@@ -42,16 +42,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\AdminHelper.cs" />
     <Compile Include="Helpers\BrowserList.cs" />
-    <Compile Include="Helpers\BrowserManagment.cs" />
     <Compile Include="Helpers\HelperManager.cs" />
-    <Compile Include="Helpers\ShopHelper.cs" />
     <Compile Include="Model\Countries.cs" />
+    <Compile Include="Model\CreateAccount.cs" />
     <Compile Include="Model\LoginData.cs" />
     <Compile Include="Model\CountryZones.cs" />
     <Compile Include="Tests\InAdminTests.cs" />
     <Compile Include="Helpers\NavigationHelper.cs" />
+    <Compile Include="Tests\NewCustomer.cs" />
     <Compile Include="Tests\ShopTests.cs" />
     <Compile Include="Tests\simpleSample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
