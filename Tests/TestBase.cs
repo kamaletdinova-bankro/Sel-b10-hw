@@ -7,7 +7,7 @@ namespace Sel_b10_hw
     {
         protected HelperManager helper;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Start()
         {
             helper = new HelperManager();

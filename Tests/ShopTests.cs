@@ -4,7 +4,8 @@ using OpenQA.Selenium;
 
 namespace Sel_b10_hw
 {
-    class ShopTests : TestBase
+    [TestFixture]
+    public class ShopTests : TestBase
     {
         [Test]
         public void StikerTest()
