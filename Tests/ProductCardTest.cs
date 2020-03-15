@@ -6,7 +6,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using Sel_b10_hw.Model;
 
-namespace ExersizeTen
+namespace Sel_b10_hw
 {
 	[TestFixture(typeof(FirefoxDriver))]
 	[TestFixture(typeof(InternetExplorerDriver))]
