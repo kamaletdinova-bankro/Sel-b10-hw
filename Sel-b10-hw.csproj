@@ -49,6 +49,7 @@
     <Compile Include="Model\LoginData.cs" />
     <Compile Include="Model\CountryZones.cs" />
     <Compile Include="Model\ProductCard.cs" />
+    <Compile Include="Tests\BlankLinksTest.cs" />
     <Compile Include="Tests\InAdminTests.cs" />
     <Compile Include="Helpers\NavigationHelper.cs" />
     <Compile Include="Tests\NewCustomerTest.cs" />
