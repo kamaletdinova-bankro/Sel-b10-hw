@@ -13,7 +13,7 @@ namespace simpleSample
         private WebDriverWait wait;
 
         [SetUp]
-        public void start()
+        public void Start()
         {
             driver = new InternetExplorerDriver();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -25,11 +25,11 @@ namespace simpleSample
             driver.Url = "http://www.google.com/";
             driver.FindElement(By.Name("q")).SendKeys("webdriver");
             driver.FindElement(By.Name("btnG")).Click();
-            wait.Until(ExpectedConditions.TitleIs("webdriver - Поиск в Google"));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.TitleIs("webdriver - Поиск в Google"));
         }
 
         [TearDown]
-        public void stop()
+        public void Stop()
         {
             driver.Quit();
             driver = null;

@@ -30,16 +30,20 @@ namespace ExersizeTen
 			driver.Url = "http://localhost/litecart/en/";
 			var product = driver.FindElement(By.CssSelector("div#box-campaigns li.product"));
 
-			var littleCard = new ProductCard();
-			littleCard.ProductName = product.FindElement(By.ClassName("name")).Text;
+			var littleCard = new ProductCard
+			{
+				ProductName = product.FindElement(By.ClassName("name")).Text
+			};
 			GetPrice(product,ref littleCard);			
 
 			product.Click();
 
 			product = driver.FindElement(By.Id("box-product"));
 
-			var bigCard = new ProductCard();
-			bigCard.ProductName = product.FindElement(By.TagName("h1")).Text;
+			var bigCard = new ProductCard
+			{
+				ProductName = product.FindElement(By.TagName("h1")).Text
+			};
 			GetPrice(product, ref bigCard);
 
 			Assert.Multiple(()=> 

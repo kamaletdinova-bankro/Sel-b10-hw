@@ -1,26 +1,27 @@
-﻿using OpenQA.Selenium;
-
-namespace Sel_b10_hw
+﻿namespace Sel_b10_hw
 {
-    public class NavigationHelper
+    public class NavigationHelper : HelperBase
     {
-        private IWebDriver _driver;
+        private readonly string baseURL;
 
-        public NavigationHelper(IWebDriver driver)
-        {
-            _driver = driver;
-        }
+        public NavigationHelper(ApplicationManager app, string baseURL)
+            : base(app) => this.baseURL = baseURL;
 
         public void Go2Url(string uri, bool isFullPath=false)
         {            
             if (isFullPath)
             {
-                _driver.Url = uri;
+                app.Browser.Url = uri;
             }
             else
             {
-                _driver.Url = "http://localhost/litecart/" + uri;
+                //string s = baseURL + uri;
+                app.Browser.Url = baseURL + uri;
             }
+        }
+        public void GoShopHome()
+        {
+            app.Browser.Url = baseURL + @"en/";
         }
     }
 }

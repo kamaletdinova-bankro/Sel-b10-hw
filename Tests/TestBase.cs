@@ -1,23 +1,19 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 
 namespace Sel_b10_hw
 {
+    [TestFixture]
     public class TestBase
     {
-        protected HelperManager helper;
+        protected ApplicationManager app;
 
         [OneTimeSetUp]
         public void Start()
         {
-            helper = new HelperManager();
+            app = new ApplicationManager((typeof(ChromeDriver)));
         }        
-
-        public void Login(LoginData user)
-        {
-            helper.Browser.FindElement(By.Name("username")).SendKeys(user.Username);
-            helper.Browser.FindElement(By.Name("password")).SendKeys(user.Password);
-            helper.Browser.FindElement(By.Name(user.SubmitButton)).Click();
-        }
     }
 }

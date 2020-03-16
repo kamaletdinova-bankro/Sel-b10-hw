@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 
 namespace Sel_b10_hw
 {
@@ -13,18 +14,18 @@ namespace Sel_b10_hw
         [Test]
         public void LoginAdmin()
         {
-            helper.Navigation.Go2Url("admin/");
-            Login(admin);
+            app.Nav.Go2Url("admin/");
+            app.Admin.Login(admin);
         }
 
         [Test]
         [Description("Exercise seven")]
         public void LeftMenuTest()
         {
-            helper.Navigation.Go2Url("admin/");
-            Login(admin);
+            app.Nav.Go2Url("admin/");
+            app.Admin.Login(admin);
 
-            var leftsideBar = helper.Browser.FindElements(By.CssSelector("ul#box-apps-menu li"));
+            var leftsideBar = app.Browser.FindElements(By.CssSelector("ul#box-apps-menu li"));
 
             List<string> menu = new List<string>();
             foreach (var item in leftsideBar)
@@ -43,9 +44,9 @@ namespace Sel_b10_hw
                     }
                 }
 
-                Assert.IsNotNull(helper.Browser.FindElements(By.CssSelector("h1")));
+                Assert.IsNotNull(app.Browser.FindElements(By.CssSelector("h1")));
 
-                leftsideBar = helper.Browser.FindElements(By.CssSelector("ul#box-apps-menu li"));
+                leftsideBar = app.Browser.FindElements(By.CssSelector("ul#box-apps-menu li"));
                 var newMenu = new List<string>();
                 int nextItem = 0;
                 foreach (var item in leftsideBar)
@@ -75,7 +76,7 @@ namespace Sel_b10_hw
                         menuItem++;
                     }
                 }
-                catch (Exception e)
+                catch
                 {
 
                 }
@@ -91,10 +92,10 @@ namespace Sel_b10_hw
         [Description("Exercise nine part 1")]
         public void Countries()
         {
-            helper.Navigation.Go2Url("admin/?app=countries&doc=countries");
-            Login(admin);
+            app.Nav.Go2Url("admin/?app=countries&doc=countries");
+            app.Admin.Login(admin);
 
-            var countriesTable = helper.Browser.FindElements(By.ClassName("row"));
+            var countriesTable = app.Browser.FindElements(By.ClassName("row"));
             var contries = new List<Countries>();
 
             foreach (var row in countriesTable)
@@ -129,9 +130,9 @@ namespace Sel_b10_hw
 
                 foreach (var contry in bigContries)
                 {
-                    helper.Navigation.Go2Url(contry.Link, true);
+                    app.Nav.Go2Url(contry.Link, true);
 
-                    var zonesTable = helper.Browser.FindElements(By.CssSelector("table#table-zones tr"));
+                    var zonesTable = app.Browser.FindElements(By.CssSelector("table#table-zones tr"));
                     var contriesZones = new List<CountryZones>();
 
                     for (int i = 1; i < (zonesTable.Count - 1); i++)
@@ -159,10 +160,10 @@ namespace Sel_b10_hw
         [Description("Exercise nine part 2")]
         public void GeoZone()
         {
-            helper.Navigation.Go2Url("admin/?app=geo_zones&doc=geo_zones");
-            Login(admin);
+            app.Nav.Go2Url("admin/?app=geo_zones&doc=geo_zones");
+            app.Admin.Login(admin);
 
-            var geoZoneTable = helper.Browser.FindElements(By.ClassName("row"));
+            var geoZoneTable = app.Browser.FindElements(By.ClassName("row"));
             var zoneLinks = new List<string>();
 
             foreach(var row in geoZoneTable)
@@ -173,9 +174,9 @@ namespace Sel_b10_hw
 
             foreach(var zoneLink in zoneLinks)
             {
-                helper.Navigation.Go2Url(zoneLink, true);
+                app.Nav.Go2Url(zoneLink, true);
 
-                var zonesTable = helper.Browser.FindElements(By.CssSelector("table#table-zones tr"));
+                var zonesTable = app.Browser.FindElements(By.CssSelector("table#table-zones tr"));
 
                 var zones = new List<string>();
 

@@ -10,8 +10,8 @@ namespace Sel_b10_hw
         [Test]
         public void StikerTest()
         {
-            helper.Navigation.Go2Url("en/");
-            var allProduct = helper.Browser.FindElements(By.CssSelector("li.product"));
+            app.Nav.Go2Url("en/");
+            var allProduct = app.Browser.FindElements(By.CssSelector("li.product"));
                        
             foreach(var product in allProduct)
             {
